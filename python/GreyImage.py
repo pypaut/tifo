@@ -93,6 +93,6 @@ class GreyImage:
         self.setHistogram()
         self.setChistogram()
         # Apply function
-        for i in range(self.height):
-            for j in range(self.width):
+        for j in range(self.height):
+            for i in range(self.width):
                 self.matrix[i][j] = int(255 * self.chistogram[self.matrix[i][j]] / (self.width * self.height))
