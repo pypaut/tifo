@@ -1,3 +1,4 @@
+from Combine import combine
 import matplotlib.pyplot as plt
 from GreyImage import GreyImage
 
@@ -39,3 +40,10 @@ class Image:
         g.height = self.height
         b.height = self.height
         return r, g, b
+
+    def equalizeHistogram(self):
+        r, g, b = self.ComponentsRGB()
+        r.equalizeHistogram()
+        g.equalizeHistogram()
+        b.equalizeHistogram()
+        self.matrix = combine(r, g, b)
