@@ -11,8 +11,8 @@ class Image:
             self.height = 0
             return
         self.matrix = plt.imread(filename)
-        self.width = len(self.matrix)
-        self.height = len(self.matrix[0])
+        self.height = len(self.matrix)
+        self.width = len(self.matrix[0])
 
     def show(self):
         plt.imshow(self.matrix)
