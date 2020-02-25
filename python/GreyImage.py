@@ -1,7 +1,13 @@
 import matplotlib.pyplot as plt
 
 class GreyImage:
-    def __init__(self, image):
+    def __init__(self, image = None):
+        if image == None:
+            self.matrix = []
+            self.width = 0
+            self.height = 0
+            return
+
         # Matrix image
         self.matrix = []
         for line in image.matrix:
