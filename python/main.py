@@ -5,8 +5,10 @@ from GreyImage import GreyImage
 def main():
     print("Open image")
     filename = 'media/20140712_163729.tga'
+    filename = 'media/20140326_124555.tga'
     im = Image(filename)
-    im.equalizeHistogramHsv()
+    im.scaleSaturation(1)
+    # im.equalizeHistogramHsv()
     im.show()
 
 

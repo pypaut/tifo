@@ -1,2 +1,3 @@
-[ ] - Bugtracker
+### Bugtracker
     [X] - Inverted i, j ???
+    [ ] - scaleSaturation(1) breaks the image

@@ -66,19 +66,25 @@ class Image:
         b.equalizeHistogram()
         self.matrix = combine(r, g, b)
 
-    def equalizeHistogramHsv(self):
-        # Convert image to HSV
+    def matrixHsv(self):
         hsv_matrix = []
         for line in self.matrix:
             new_line = []
             for p in line:
                 new_line.append(RgbToHsv(p))
             hsv_matrix.append(new_line)
-        self.matrix = hsv_matrix
+        return hsv_matrix
+
+    def equalizeHistogramHsv(self):
+        # Convert image to HSV
+        self.matrix = self.matrixHsv()
+
         # Get H, S, and V components as grey scale
         h, s, v = self.ComponentsHSV()
+
         # Equalize histogram on V
         v.equalizeHistogram()
+
         # Combine back to HSV image
         new_matrix = []
         for i in range(self.height):
@@ -92,7 +98,25 @@ class Image:
                 new_line.append(new_pix)
             new_matrix.append(new_line)
         self.matrix = new_matrix
+
         # Convert to RGB
         for i in range(self.height):
             for j in range(self.width):
                 self.matrix[i][j] = HsvToRgb(self.matrix[i][j])
+
+    def scaleSaturation(self, coef):
+        # Convert to HSV image
+        matrixHsv = self.matrixHsv()
+
+        # Scale the saturation field
+        matrixRgb = []
+        for i in range(self.height):
+            new_line = []
+            for j in range(self.width):
+                p = matrixHsv[i][j]
+                new_p = (p[0], coef * p[1], p[2])
+                matrixHsv[i][j] = new_p
+                # Convert to RGB
+                new_line.append(HsvToRgb(matrixHsv[i][j]))
+            matrixRgb.append(new_line)
+        self.matrix = matrixRgb
