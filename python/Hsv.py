@@ -1,3 +1,6 @@
+import math
+
+
 def RgbToHsv(pixel):
     r, g, b = pixel[0]/255, pixel[1]/255, pixel[2]/255
     mx = max(r, g, b)
@@ -24,3 +27,24 @@ def RgbToHsv(pixel):
     v = mx*100
 
     return (h, s, v)
+
+
+def HsvToRgb(pixel):
+    h, s, v = pixel[0], pixel[1], pixel[2]
+    new_h = math.floor(h/60) % 6
+    f = h/60 - new_h
+    l = v * (1 - s)
+    m  = v * (1 - f * s)
+    n = v * (1 - (1 - f) * s)
+    if new_h == 0:
+        return (v, n, l)
+    elif new_h == 1:
+        return (m, v, l)
+    elif new_h == 2:
+        return (l, v, n)
+    elif new_h == 3:
+        return (l, m, v)
+    elif new_h == 4:
+        return (n, l, v)
+    elif new_h == 5:
+        return (v, l, m)

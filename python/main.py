@@ -6,11 +6,12 @@ def main():
     print("Open image")
     filename = 'media/20140712_163729.tga'
     im = Image(filename)
-
+    im.equalizeHistogramHsv()
     im.show()
 
-    im.equalizeHistogram()
-    im.show()
+
+    # im.equalizeHistogram()
+    # im.show()
     # print("Get components")
     # r, g, b = im.ComponentsRGB()
 
