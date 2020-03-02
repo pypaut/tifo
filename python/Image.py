@@ -121,3 +121,28 @@ class Image:
                 new_line.append(HsvToRgb((p[0], coef * p[1], p[2])))
             matrixRgb.append(new_line)
         self.matrix = matrixRgb
+
+    def convolution(self, mask):
+        if len(mask) % 2 != 1:
+            print("Error : Image.convolution() : mask must be of odd size.")
+            return
+        m = len(mask)
+        b = m // 2 + 1
+        e1 = len(self.matrix) - b + 1
+        e2 = len(self.matrix[0]) - b + 1
+        # Iterate upon image elements
+        new_matrix = []
+        for i in range(b, e1 + 1):
+            new_line = []
+            for j in range(b, e2 + 1):
+                conv = [0, 0, 0]
+                # Iterate upon mask elements
+                for k in range(m):
+                    for l in range(m):
+                        p = self.matrix[i - b + k][j - b + l]
+                        conv[0] += p[0] * mask[k][l]
+                        conv[1] += p[1] * mask[k][l]
+                        conv[2] += p[2] * mask[k][l]
+                new_line.append((conv[0], conv[1], conv[2]))
+            new_matrix.append(new_line)
+        self.matrix = new_matrix

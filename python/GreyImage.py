@@ -99,3 +99,25 @@ class GreyImage:
                 height = len(self.matrix)
                 width = len(self.matrix[0])
                 self.matrix[i][j] = int(255 * self.chistogram[p] / (width * height))
+
+    def convolution(self, mask):
+        if len(mask) % 2 != 1:
+            print("Error : Image.convolution() : mask must be of odd size.")
+            return
+        m = len(mask)
+        b = m // 2 + 1
+        e1 = len(self.matrix) - b + 1
+        e2 = len(self.matrix[0]) - b + 1
+        # Iterate upon image elements
+        new_matrix = []
+        for i in range(b, e1 + 1):
+            new_line = []
+            for j in range(b, e2 + 1):
+                conv = 0
+                # Iterate upon mask elements
+                for k in range(m):
+                    for l in range(m):
+                        conv += self.matrix[i - b + k][j - b + l] * mask[k][l]
+                new_line.append(conv)
+            new_matrix.append(new_line)
+        self.matrix = new_matrix
