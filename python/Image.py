@@ -2,6 +2,7 @@ from Combine import combine
 from GreyImage import GreyImage
 from Hsv import *
 import matplotlib.pyplot as plt
+from copy import copy
 
 
 class Image:
@@ -146,3 +147,16 @@ class Image:
                 new_line.append((conv[0], conv[1], conv[2]))
             new_matrix.append(new_line)
         self.matrix = new_matrix
+
+    def laplacien(self):
+        base_matrix = copy(self.matrix)
+        laplacien_mask = [[0, -1, 0], [-1, 4, -1], [0, -1, 0]]
+        self.convolution(laplacien_mask)
+        for i in range(len(base_matrix)):
+            for j in range(len(base_matrix[0])):
+                base_matrix[i][j] = (
+                    base_matrix[i][j][0] - self.matrix[i][j][0],
+                    base_matrix[i][j][1] - self.matrix[i][j][1],
+                    base_matrix[i][j][2] - self.matrix[i][j][2]
+                )
+        self.matrix = base_matrix
