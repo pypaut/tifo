@@ -2,7 +2,7 @@ import math
 
 
 def RgbToHsv(pixel):
-    r, g, b = pixel[0]/255, pixel[1]/255, pixel[2]/255
+    r, g, b = pixel[0] / 255, pixel[1] / 255, pixel[2] / 255
     mx = max(r, g, b)
     mn = min(r, g, b)
     diff = mx - mn
@@ -11,40 +11,46 @@ def RgbToHsv(pixel):
     if mx == mn:
         h = 0
     elif mx == r:  # More red
-        h = (60 * ((g-b)/diff) + 360) % 360
+        h = (60 * ((g - b) / diff) + 360) % 360
     elif mx == g:  # More green
-        h = (60 * ((b-r)/diff) + 120) % 360
+        h = 60 * ((b - r) / diff) + 120
     elif mx == b:  # More blue
-        h = (60 * ((r-g)/diff) + 240) % 360
+        h = 60 * ((r - g) / diff) + 240
 
     # Saturation
     if mx == 0:
         s = 0
     else:
-        s = (diff/mx)*100
+        s = 1 - mn / mx
 
     # Value
-    v = mx*100
+    v = mx
 
     return (h, s, v)
 
 
 def HsvToRgb(pixel):
     h, s, v = pixel[0], pixel[1], pixel[2]
-    new_h = math.floor(h/60) % 6
-    f = h/60 - new_h
+    h_i = math.floor(h / 60) % 6
+    f = h / 60 - h_i
     l = v * (1 - s)
-    m  = v * (1 - f * s)
+    m = v * (1 - f * s)
     n = v * (1 - (1 - f) * s)
-    if new_h == 0:
+
+    v = int(v * 255)
+    l = int(l * 255)
+    m = int(m * 255)
+    n = int(n * 255)
+
+    if h_i == 0:
         return (v, n, l)
-    elif new_h == 1:
+    elif h_i == 1:
         return (m, v, l)
-    elif new_h == 2:
+    elif h_i == 2:
         return (l, v, n)
-    elif new_h == 3:
+    elif h_i == 3:
         return (l, m, v)
-    elif new_h == 4:
+    elif h_i == 4:
         return (n, l, v)
-    elif new_h == 5:
+    elif h_i == 5:
         return (v, l, m)

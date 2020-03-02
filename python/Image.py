@@ -72,6 +72,7 @@ class Image:
             new_line = []
             for p in line:
                 new_line.append(RgbToHsv(p))
+                # new_line.append(colorsys.rgb_to_hsv(p[0], p[1], p[2]))
             hsv_matrix.append(new_line)
         return hsv_matrix
 
@@ -114,9 +115,7 @@ class Image:
             new_line = []
             for j in range(self.width):
                 p = matrixHsv[i][j]
-                new_p = (p[0], coef * p[1], p[2])
-                matrixHsv[i][j] = new_p
                 # Convert to RGB
-                new_line.append(HsvToRgb(matrixHsv[i][j]))
+                new_line.append(HsvToRgb((p[0], coef * p[1], p[2])))
             matrixRgb.append(new_line)
         self.matrix = matrixRgb
