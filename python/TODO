@@ -1,3 +1,4 @@
 ### Bugtracker
     [X] - Inverted i, j ???
-    [ ] - scaleSaturation(1) breaks the image
+    [X] - scaleSaturation(1) breaks the image
+    [ ] - v.equalizeHistogram() won't do a thing

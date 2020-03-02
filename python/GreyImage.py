@@ -95,4 +95,7 @@ class GreyImage:
         # Apply function
         for i in range(self.height):
             for j in range(self.width):
-                self.matrix[i][j] = int(255 * self.chistogram[self.matrix[i][j]] / (self.width * self.height))
+                p = self.matrix[i][j]
+                height = len(self.matrix)
+                width = len(self.matrix[0])
+                self.matrix[i][j] = int(255 * self.chistogram[p] / (width * height))

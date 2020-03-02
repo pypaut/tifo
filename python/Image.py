@@ -51,9 +51,9 @@ class Image:
             s_line = []
             v_line = []
             for p in line:
-                h_line.append(int(p[0]))
-                s_line.append(int(p[1]))
-                v_line.append(int(p[2]))
+                h_line.append(int(255 * p[0]/360))
+                s_line.append(int(255 * p[1]))
+                v_line.append(int(255 * p[2]))
             h.matrix.append(h_line)
             s.matrix.append(s_line)
             v.matrix.append(v_line)
@@ -72,7 +72,6 @@ class Image:
             new_line = []
             for p in line:
                 new_line.append(RgbToHsv(p))
-                # new_line.append(colorsys.rgb_to_hsv(p[0], p[1], p[2]))
             hsv_matrix.append(new_line)
         return hsv_matrix
 
@@ -81,10 +80,13 @@ class Image:
         self.matrix = self.matrixHsv()
 
         # Get H, S, and V components as grey scale
+        # CAREFUL : this step scales h, s, v to 255
         h, s, v = self.ComponentsHSV()
 
         # Equalize histogram on V
+        v.showHistogram()
         v.equalizeHistogram()
+        v.showHistogram()
 
         # Combine back to HSV image
         new_matrix = []
@@ -92,7 +94,7 @@ class Image:
             new_line = []
             for j in range(self.width):
                 new_pix = (
-                    h.matrix[i][j] / 255,
+                    h.matrix[i][j] / 255 * 360,
                     s.matrix[i][j] / 255,
                     v.matrix[i][j] / 255,
                 )
